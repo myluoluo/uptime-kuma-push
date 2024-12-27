@@ -28,8 +28,12 @@ function Test-Website {
         $obj
     )
     
-    # If search isn't set, set it to blank
-    if ($obj.search) { $sSearch = $obj.search } Else { $sSearch = "" }
+    if ($obj.statuscode) {
+        $statuscode = $obj.statuscode
+    } Else {        
+        # If search isn't set, set it to blank
+        if ($obj.search) { $sSearch = $obj.search } Else { $sSearch = "" }
+    }
 
     # If host doesnt start with https:// or http:// then use https://
     if ($obj.host -notmatch "^(https://|http://)") { $obj.host = "https://$($obj.host)" }
@@ -39,12 +43,19 @@ function Test-Website {
 
     try {
         $result = Invoke-WebRequest $obj.host -UseDefaultCredentials -TimeoutSec $timeout
+        $httpStatusCode = $result.StatusCode
     }
     catch {
         $result = $false
+        $httpStatusCode = $_.Exception.Response.StatusCode.value__
     }
 
-    If ($result) { $result = $result -like "*$sSearch*" }
+    if ($httpStatusCode -eq $obj.statuscode) {
+        $result = $true
+    } else {
+        $result = $false
+        If ($result) { $result = $result -like "*$sSearch*" }
+    }
 
     return $result
 }
@@ -98,7 +109,7 @@ While ($true) {
                 $down_message = ""
                 $up_message = ""
 
-                Write-Host "Group Monitor: id=$($monitor.id) count=$($monitor.group.count)"
+                Write-Host "Group Monitor: name=$($monitor.name) id=$($monitor.id) count=$($monitor.group.count)"
 
                 # Loop over each group member
                 $monitor.group | ForEach-Object {

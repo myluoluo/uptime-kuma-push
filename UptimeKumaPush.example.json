@@ -7,16 +7,19 @@
     
     },
     "monitors":[
-        {"id": "2e7mMkKP873", "type": "ping", "host": "8.8.8.8"},
-        {"id": "9ibuQC6pcWX", "type": "port", "host": "ss64.com", "port": 22},
-        {"id": "mHY9sbhASAP", "type": "website", "host": "https://ss64.com/ps/get-help.html", "search": "Syntax"},
-        {"id": "GSgX3MyQ5T7", "group":[
+        {"id": "2e7mMkKP873", "name": "Service1", "type": "ping", "host": "8.8.8.8"},
+        {"id": "9ibuQC6pcWX", "name": "Service2", "type": "port", "host": "ss64.com", "port": 22},
+        {"id": "mHY9sbhASAP", "name": "Service3", "type": "website", "host": "https://ss64.com/ps/get-help.html", "search": "Syntax"},
+        {"id": "GSgX3MyQ5T7", "name": "Service4", "group":[
             {"type": "ping", "host": "1.1.1.1"},
             {"type": "port", "host": "ss64.com", "port": 22},
             {"type": "website", "host": "https://ss64.com/nt/cmd.html", "search": "Start a new CMD"}
-
-        ]
-    }
+        ]},
+        {"id": "0tpxEqkpiV", "name": "Service5" , "group":[
+            {"type": "ping", "host": "1.1.1.1"},
+            {"type": "port", "host": "ss64.com", "port": 22},
+            {"type": "website", "host": "https://ss64.com/nt/404.html", "statuscode": 404}
+        ]}
     ]
   
 }
